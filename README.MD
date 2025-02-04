@@ -86,7 +86,7 @@ Please read our CONTRIBUTING.md for more details on our code of conduct and the 
 
 ## License
 
-net-flip is licensed under the MIT License. See the LICENSE file for more information.
+net-flip is licensed under the GNU GENERAL PUBLIC LICENSE License. See the LICENSE file for more information.
 
 ## Future Roadmap
 
