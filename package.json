@@ -1,0 +1,12 @@
+{
+  "name": "net-flip",
+  "packageManager": "yarn@4.2.2",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "ffi-napi": "^4.0.3"
+  }
+}

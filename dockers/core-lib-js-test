@@ -1,0 +1,31 @@
+# Use the official Ubuntu image as the base image.
+FROM ubuntu:latest
+
+# Update package list and install required packages:
+# - build-essential: for gcc and make.
+# - nodejs and npm: to run Node.js applications.
+RUN apt-get update && apt-get install -y build-essential nodejs npm
+
+# Set the working directory inside the container.
+WORKDIR /app
+
+# Copy all project files into /app.
+COPY . /app
+
+# Install Node.js dependencies.
+# This assumes you have a package.json in your project that includes ffi-napi and ref-napi.
+RUN npm install
+
+# Build the core library:
+# 1. Compile core-lib/libcore.c into an object file.
+RUN gcc -std=c11 -pedantic -Wall -Wextra -Werror -c ./core-lib/libcore.c -o ./libcore.o
+
+# 2. Create a shared library from the object file.
+RUN gcc -shared -o ./libcore.so ./libcore.o
+
+# Build the test executable (optional):
+# Note: We output the executable to a filename that doesn't conflict with the directory `core-test`
+RUN gcc -std=c11 -pedantic -Wall -Wextra -Werror ./core-test/main.c -Icore-lib -L. -lcore -o ./core-test-app -Wl,-rpath,.
+
+# Set the default command to run your Node.js script located at ./core-test/main.js.
+CMD ["node", "./core-test/main.js"]
