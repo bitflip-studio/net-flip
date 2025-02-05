@@ -1,8 +1,12 @@
 {
   "name": "net-flip-js",
   "packageManager": "yarn@4.2.2",
+  "type": "module",
   "dependencies": {
     "ffi-napi": "^4.0.3",
     "ref-napi": "^3.0.3"
+  },
+  "scripts": {
+    "test": "node ./src/index.js"
   }
 }

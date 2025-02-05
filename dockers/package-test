@@ -1,0 +1,36 @@
+# Use the official Ubuntu image as the base image.
+FROM ubuntu:latest
+
+# Install required packages and Yarn.
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    nodejs
+
+# Add the Yarn APT repository and install Yarn.
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
+
+# Set the working directory inside the container.
+WORKDIR /app
+
+# Copy all project files into /app.
+COPY . /app
+
+# Install Node.js dependencies using Yarn.
+RUN yarn install
+
+# Build the core library:
+# 1. Compile core-lib/libcore.c into an object file.
+RUN gcc -std=c11 -pedantic -Wall -Wextra -Werror -c ./core-lib/libcore.c -o ./libcore.o
+
+# 2. Create a shared library from the object file.
+RUN gcc -shared -o ./libcore.so ./libcore.o
+
+# Build the test executable (optional):
+# Note: We output the executable to a filename that doesn't conflict with the directory `core-test`
+RUN gcc -std=c11 -pedantic -Wall -Wextra -Werror ./core-test/main.c -Icore-lib -L. -lcore -o ./core-test-app -Wl,-rpath,.
+
+# Set the default command to run your Node.js test script via Yarn.
+CMD ["yarn", "run", "test-package"]

@@ -8,5 +8,8 @@
   ],
   "dependencies": {
     "ffi-napi": "^4.0.3"
+  },
+  "scripts": {
+    "test-package": "yarn workspace net-flip-js run test"
   }
 }
