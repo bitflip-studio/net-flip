@@ -1,5 +1,5 @@
 {
-  "name": "net-flip-js",
+  "name": "net-flip-js-test",
   "type": "module",
   "dependencies": {
     "ffi-napi": "^4.0.3",

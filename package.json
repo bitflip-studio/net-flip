@@ -3,6 +3,7 @@
   "packageManager": "yarn@4.2.2",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -10,6 +11,6 @@
     "ffi-napi": "^4.0.3"
   },
   "scripts": {
-    "test-package": "yarn workspace net-flip-js run test"
+    "test-package": "node ./packages/net-flip-js/src/index.js"
   }
 }

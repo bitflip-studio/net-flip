@@ -13,6 +13,12 @@ bool server_init(Server_t* server, ServerSettings_t* settings) {
     return true;
 }
 
+bool server_init_fromArgs(Server_t* server, uint16_t port) {
+    ServerSettings_t settings;
+    settings.port = port;
+    return server_init(server, &settings);
+}
+
 
 
 
